@@ -39,13 +39,9 @@ namespace BasiK.BasiKLauncher
             
             Graphics g = Graphics.FromImage(sbmp);
             g.Clear(Color.Transparent);
-            if (!string.IsNullOrEmpty(_entry.DisplayIcon))
-                try
-                {
-                    g.DrawImage(System.Drawing.Image.FromFile(_entry.DisplayIcon), new Rectangle(70, 22, 65, 65));
-                }
-                catch { }
-
+            if (_entry.DisplayImage != null)
+                g.DrawImage(_entry.DisplayImage, new Rectangle(70, 22, 65, 65));
+                
             int textHeight = 30;
             foreach (string subs in _entry.DisplayName.Split(new char[] { ':' }))
             {
@@ -59,12 +55,8 @@ namespace BasiK.BasiKLauncher
 
             g = Graphics.FromImage(ubmp);
             g.Clear(Color.Transparent);
-            if (!string.IsNullOrEmpty(_entry.DisplayIcon))
-                try
-                {
-                    g.DrawImage(System.Drawing.Image.FromFile(_entry.DisplayIcon), new Rectangle(70, 22, 65, 65));
-                }
-                catch { }
+            if (_entry.DisplayImage != null)
+                g.DrawImage(_entry.DisplayImage, new Rectangle(70, 22, 65, 65));
 
             textHeight = 30;
             foreach (string subs in _entry.DisplayName.Split(new char[] { ':' }))

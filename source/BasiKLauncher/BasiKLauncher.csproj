@@ -60,7 +60,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ApplicationLibrary.cs" />
-    <Compile Include="ApplicationStarter.cs" />
     <Compile Include="LauncherForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +126,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <EmbeddedResource Include="Resources\exit_icon.png" />
     <EmbeddedResource Include="Resources\shutdown_icon.png" />
     <EmbeddedResource Include="Resources\full_background.png" />
   </ItemGroup>

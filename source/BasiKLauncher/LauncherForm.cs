@@ -97,7 +97,7 @@ namespace BasiK.BasiKLauncher
             if (e.CurrentInputState.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_DPAD_DOWN) && !e.PreviousInputState.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_DPAD_DOWN))
                 this.BeginInvoke(new SelectionMoveDelegate(SelectNextRow), new object[] { });
             if (e.CurrentInputState.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_A) && !e.PreviousInputState.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_A))
-                this.BeginInvoke(new SelectionMoveDelegate(StartGame), new object[] { });
+                this.BeginInvoke(new SelectionMoveDelegate(StartApplication), new object[] { });
             if (e.CurrentInputState.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_B) && !e.PreviousInputState.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_B))
                 this.BeginInvoke(new SelectionMoveDelegate(Application.Exit), new object[] { });
         }
@@ -131,7 +131,7 @@ namespace BasiK.BasiKLauncher
             }
             else if (keyData == Keys.Enter)
             {
-                this.BeginInvoke(new SelectionMoveDelegate(StartGame), new object[] { });
+                this.BeginInvoke(new SelectionMoveDelegate(StartApplication), new object[] { });
                 return true;
             }
             return false;
@@ -150,7 +150,7 @@ namespace BasiK.BasiKLauncher
             current_row = row;
             current_column = col;
             SelectCurrentControl();
-            StartGame();
+            StartApplication();
         }
 
         void b_Click(object sender, EventArgs e)
@@ -168,10 +168,10 @@ namespace BasiK.BasiKLauncher
             SelectCurrentControl();
         }
 
-        private void StartGame()
+        private void StartApplication()
         {
             if (_selectedControl != null)
-                ApplicationStarter.StartApplication(_selectedControl.AppEntry);
+                _selectedControl.AppEntry.Execute();
         }
 
         private void SelectPreviousRow()

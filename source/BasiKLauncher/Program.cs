@@ -46,7 +46,10 @@ namespace BasiK.BasiKLauncher
             {
             }
 
-            dict.AddApplication("~ Windows Shutdown", "shutdown", "/s /f /t 05", "");
+            dict.AddApplication(new ApplicationExitEntry());
+            dict.AddApplication(new WindowsShutdownEntry());
+
+            // dict.AddApplication("~ Windows Shutdown", "shutdown", "/s /f /t 05", "");
 
 
             Application.Run(new LauncherForm(dict));

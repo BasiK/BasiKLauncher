@@ -51,7 +51,7 @@ namespace BasiK.BasiKLauncher
                     regUninstallKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
 
                     RegistryKey rsteam = Registry.LocalMachine.OpenSubKey(steamExeRegKey);
-                    steamExe = rsteam.GetValue("ServiceInstallPath") as string;
+                    steamExe = Path.Combine(rsteam.GetValue("InstallPath") as string, "steam.exe");
                 }
                 else
                 {
@@ -72,14 +72,11 @@ namespace BasiK.BasiKLauncher
                 {
                     RegistryKey gamekey = rksoft.OpenSubKey(steamgame);
                     _applicationEntries.Add(
-                        new ApplicationEntry
-                        {
-                            SteamAppID = steamgame.Substring(10),
-                            DisplayIcon = gamekey.GetValue("DisplayIcon") as string,
-                            DisplayName = gamekey.GetValue("DisplayName") as string,
-                            StartApp = steamExe,
-                            StartOptions =  "-applaunch " + steamgame.Substring(10) + " "
-                        });
+                        new SteamApplication(
+                            gamekey.GetValue("DisplayName") as string, 
+                            steamExe, 
+                            "-applaunch " + steamgame.Substring(10) + " ", 
+                            gamekey.GetValue("DisplayIcon") as string));
                 }
 
                 _applicationEntries.Sort();
@@ -109,14 +106,7 @@ namespace BasiK.BasiKLauncher
                 if (string.IsNullOrEmpty(exe.Trim()))
                     throw new Exception("Empty executable name... can not create application entry.");
 
-                _applicationEntries.Add(
-                    new ApplicationEntry
-                    {
-                        DisplayIcon = iconFile,
-                        DisplayName = name,
-                        StartApp = exe,
-                        StartOptions = options
-                    });
+                _applicationEntries.Add(new ExternalApplication(name, exe, options, iconFile));
 
                 return null;
             }
@@ -124,6 +114,12 @@ namespace BasiK.BasiKLauncher
             {
                 return string.Format("Excepction occured: {0} \r\n{1}", exc.Message, exc.StackTrace);
             }
+        }
+
+        public void AddApplication(ApplicationEntry entry)
+        {
+            if (entry != null)
+                _applicationEntries.Add(entry);
         }
 
     }
